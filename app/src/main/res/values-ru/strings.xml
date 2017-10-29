@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Weatherapp</string>
+    <string name="splashtext">Добро пожаловать в ПогодаХ3000!</string>
+
+
+    <string name="textview">Выберите город</string>
+    <string name="showdescript">Узнать погоду</string>
+
+
+
+
+    <string-array name="cities">
+
+        <item>Москва</item>
+        <item>Санкт-Петербург</item>
+        <item>Краснодар</item>
+        <item>Екатеринбург</item>
+        <item>Новосибирск</item>
+        <item>Хабаровск</item>
+        <item>Владивосток</item>
+
+
+    </string-array>
+
+    <string-array name="weather">
+
+        <item>солнечно</item>
+        <item>дождь</item>
+        <item>солнечно +30</item>
+        <item>солнечно +10</item>
+        <item>снег</item>
+        <item>холодно</item>
+        <item>владивосток 2000!</item>
+
+
+    </string-array>
+</resources>
