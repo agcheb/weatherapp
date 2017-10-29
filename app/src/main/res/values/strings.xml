@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Weatherapp</string>
+    <string name="splashtext">Welcome to weather app</string>
 </resources>
