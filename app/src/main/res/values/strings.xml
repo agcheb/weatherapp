@@ -1,4 +1,37 @@
 <resources>
     <string name="app_name">Weatherapp</string>
     <string name="splashtext">Welcome to weather app</string>
+
+
+    <string name="textview">Choose the city</string>
+    <string name="showdescript">Find out the weather</string>
+
+
+
+
+    <string-array name="cities">
+
+        <item>Moscow</item>
+        <item>Saint Petersburg</item>
+        <item>Krasnodar</item>
+        <item>Ekaterinburg</item>
+        <item>Novosibirsk</item>
+        <item>Khabarovsk</item>
+        <item>Vladivostok</item>
+
+
+    </string-array>
+
+    <string-array name="weather">
+
+        <item>sunny</item>
+        <item>rainy</item>
+        <item>sunny +30</item>
+        <item>sunny +10</item>
+        <item>snow</item>
+        <item>cold</item>
+        <item>Vladivostok 2000!</item>
+
+
+    </string-array>
 </resources>
