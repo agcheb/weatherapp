@@ -1,6 +1,8 @@
 package com.agcheb.weatherapp;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -13,6 +15,9 @@ import android.widget.TextView;
  */
 
 public class MainScreenActivity extends Activity {
+    public static final String APP_PREFERENCES = "mysettings";
+
+    int savedcityNum = 0;
     Spinner spinnerCities;
     TextView weatherText;
 
@@ -20,19 +25,48 @@ public class MainScreenActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainmenulayout);
+        SharedPreferences sp = getSharedPreferences(APP_PREFERENCES,
+                Context.MODE_PRIVATE);
+
         Button btnChooseWeather = (Button)findViewById(R.id.button_show_weather);
         spinnerCities = (Spinner)findViewById(R.id.spinner_for_cities);
-        btnChooseWeather.setOnClickListener(onClickListener);
         weatherText = (TextView)findViewById(R.id.textview_weather);
+
+        loadPreferences();
+        btnChooseWeather.setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if(view.getId() == R.id.button_show_weather){
-                String result = WeatherInCity.getWeather(MainScreenActivity.this,spinnerCities.getSelectedItemPosition());
+                int cityNum = spinnerCities.getSelectedItemPosition();
+                String result = WeatherInCity.getWeather(MainScreenActivity.this,cityNum);
                 weatherText.setText(result);
+                savePreferences(APP_PREFERENCES,cityNum);
             }
         }
     };
+
+
+
+
+    private void savePreferences(String key, int value) {
+        SharedPreferences sharedPreferences = getSharedPreferences(
+                APP_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
+
+    private void loadPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences(
+                APP_PREFERENCES, MODE_PRIVATE);
+        int savedRadioIndex = sharedPreferences.getInt(
+                APP_PREFERENCES, 0);
+        spinnerCities.setSelection(savedRadioIndex);
+        String result = WeatherInCity.getWeather(MainScreenActivity.this,savedRadioIndex);
+        weatherText.setText(result);
+
+    }
 }
