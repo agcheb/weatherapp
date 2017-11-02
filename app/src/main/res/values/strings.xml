@@ -7,8 +7,6 @@
     <string name="showdescript">Find out the weather</string>
 
 
-
-
     <string-array name="cities">
 
         <item>Moscow</item>

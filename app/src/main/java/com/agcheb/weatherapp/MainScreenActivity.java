@@ -17,7 +17,6 @@ import android.widget.TextView;
 public class MainScreenActivity extends Activity {
     public static final String APP_PREFERENCES = "mysettings";
 
-    int savedcityNum = 0;
     Spinner spinnerCities;
     TextView weatherText;
 
