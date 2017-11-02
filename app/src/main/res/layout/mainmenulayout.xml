@@ -31,6 +31,12 @@
         android:layout_marginTop="@dimen/standartmargintop"
         android:text="@string/showdescript"
         />
+    <TextView
 
+        android:layout_marginTop="@dimen/standartmargintop"
+        android:id="@+id/text_view_smth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
 </LinearLayout>

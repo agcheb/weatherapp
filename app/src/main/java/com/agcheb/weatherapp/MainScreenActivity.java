@@ -17,9 +17,12 @@ import android.widget.TextView;
 
 public class MainScreenActivity extends Activity {
     public static final String APP_PREFERENCES = "mysettings";
+    public static final String CALLBACKMSG = "callbackmsg";
+
+    private static final int REQCODE = 1;
 
     Spinner spinnerCities;
-    TextView weatherText;
+    TextView resultTextFromNextScreen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,7 +33,7 @@ public class MainScreenActivity extends Activity {
 
         Button btnChooseWeather = (Button)findViewById(R.id.button_show_weather);
         spinnerCities = (Spinner)findViewById(R.id.spinner_for_cities);
-        weatherText = (TextView)findViewById(R.id.textview_weather);
+        resultTextFromNextScreen = (TextView)findViewById(R.id.text_view_smth);
 
         loadPreferences();
         btnChooseWeather.setOnClickListener(onClickListener);
@@ -53,13 +56,18 @@ public class MainScreenActivity extends Activity {
                 intent.putExtra(WeatherInCityActivity.EXTRA_CITY,city);
                 intent.putExtra(WeatherInCityActivity.EXTRA_MESSAGE,result);
 
-                startActivity(intent);
+                startActivityForResult(intent, REQCODE);
             }
         }
     };
 
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data != null){
+            resultTextFromNextScreen.setText("Мы поделились через смс следующим сообщением:\n " + data.getStringExtra(CALLBACKMSG));
+        }
+    }
 
     private void savePreferences(String key, int value) {
         SharedPreferences sharedPreferences = getSharedPreferences(
