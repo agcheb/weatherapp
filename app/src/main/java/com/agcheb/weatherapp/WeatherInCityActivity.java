@@ -58,7 +58,10 @@ public class WeatherInCityActivity extends AppCompatActivity {
                 intentShare.setType("text/plain");
                 intentShare.putExtra(Intent.EXTRA_TEXT,msgForSharing);
 
-                startActivity(intentShare);
+                //соершит попытку отправки сообщения только если есть приложения подходящие по фильтру
+                if(intentShare.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intentShare);
+                }
             }
         }
     };
