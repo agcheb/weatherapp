@@ -5,8 +5,7 @@
 
     <string name="textview">Выберите город</string>
     <string name="showdescript">Узнать погоду</string>
-
-
+    <string name="share_btn">Поделиться</string>
 
 
     <string-array name="cities">

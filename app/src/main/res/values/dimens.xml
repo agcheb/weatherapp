@@ -4,4 +4,5 @@
     <dimen name="standart_margin_top">30dp</dimen>
     <dimen name="standartmargintop">15dp</dimen>
     <dimen name="padding_std">30dp</dimen>
+    <dimen name="padding_std_share">70dp</dimen>
 </resources>

@@ -5,6 +5,7 @@
 
     <string name="textview">Choose the city</string>
     <string name="showdescript">Find out the weather</string>
+    <string name="share_btn">Share</string>
 
 
     <string-array name="cities">

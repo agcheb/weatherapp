@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.agcheb.weatherapp.WeatherInCityActivity">
+    android:orientation="vertical"
+    >
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+
+        android:layout_marginTop="@dimen/standartmargintop"
+        android:id="@+id/textview_city"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="City wasn't choosen"/>
+
+    <TextView
+
+        android:layout_marginTop="@dimen/standartmargintop"
+        android:id="@+id/textview_weather"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="City wasn't choosen"/>
+
+    <Button
+
+        android:layout_gravity="bottom"
+        android:id="@+id/button_share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_std_share"
+        android:layout_marginRight="@dimen/padding_std_share"
+        android:layout_marginTop="@dimen/standartmargintop"
+        android:text="@string/share_btn"
+        />
+    </LinearLayout>

@@ -2,6 +2,7 @@ package com.agcheb.weatherapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,14 +36,24 @@ public class MainScreenActivity extends Activity {
         btnChooseWeather.setOnClickListener(onClickListener);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        savePreferences(APP_PREFERENCES,spinnerCities.getSelectedItemPosition());
+    }
+
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if(view.getId() == R.id.button_show_weather){
                 int cityNum = spinnerCities.getSelectedItemPosition();
+                String city = (String)spinnerCities.getSelectedItem();
                 String result = WeatherInCity.getWeather(MainScreenActivity.this,cityNum);
-                weatherText.setText(result);
-                savePreferences(APP_PREFERENCES,cityNum);
+                Intent intent = new Intent(MainScreenActivity.this,WeatherInCityActivity.class);
+                intent.putExtra(WeatherInCityActivity.EXTRA_CITY,city);
+                intent.putExtra(WeatherInCityActivity.EXTRA_MESSAGE,result);
+
+                startActivity(intent);
             }
         }
     };
@@ -64,8 +75,7 @@ public class MainScreenActivity extends Activity {
         int savedRadioIndex = sharedPreferences.getInt(
                 APP_PREFERENCES, 0);
         spinnerCities.setSelection(savedRadioIndex);
-        String result = WeatherInCity.getWeather(MainScreenActivity.this,savedRadioIndex);
-        weatherText.setText(result);
+
 
     }
 }
