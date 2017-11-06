@@ -3,6 +3,7 @@ package com.agcheb.weatherapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,6 +12,9 @@ public class WeatherInCityActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "weatherincity";
     public static final String EXTRA_CITY = "city";
+    private static final String TAG = "########weather";
+    private static final String CITY = "city";
+    private static final String WEATHER_EFFECT = "weather_effect";
 
 
     TextView cityview;
@@ -18,12 +22,11 @@ public class WeatherInCityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weather_in_city);
-        Intent intent = getIntent();
-
-        if(intent != null){
-            String city = intent.getStringExtra(EXTRA_CITY);
-            String weather = intent.getStringExtra(EXTRA_MESSAGE);
+        String city;
+        String weather;
+        if(savedInstanceState != null){
+            city = savedInstanceState.getString(CITY);
+            weather = savedInstanceState.getString(WEATHER_EFFECT);
 
             cityview = (TextView) findViewById(R.id.textview_city);
             weatherincity = (TextView) findViewById(R.id.textview_weather);
@@ -31,13 +34,62 @@ public class WeatherInCityActivity extends AppCompatActivity {
             cityview.setText(city);
             weatherincity.setText(weather);
         }
+        setContentView(R.layout.activity_weather_in_city);
+        Intent intent = getIntent();
+
+        if(intent != null){
+            city = intent.getStringExtra(EXTRA_CITY);
+            weather = intent.getStringExtra(EXTRA_MESSAGE);
+            cityview = (TextView) findViewById(R.id.textview_city);
+            weatherincity = (TextView) findViewById(R.id.textview_weather);
+
+            cityview.setText(city);
+            weatherincity.setText(weather);
+
+        }
+
         Button btnShareWithFriends = (Button)findViewById(R.id.button_share);
         btnShareWithFriends.setOnClickListener(onClickListener);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(CITY,cityview.getText().toString());
+        outState.putString(WEATHER_EFFECT,weatherincity.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
 
+    @Override
+    protected void onStart() {
+        Log.d(TAG,"onStart");
+        super.onStart();
+    }
 
-// Вопрос: при таком интенте В списке возможных приложений выдается много лишних(копировать, еще какие-то)
+    @Override
+    protected void onResume() {
+        Log.d(TAG,"onResume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG,"onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d(TAG,"onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG,"onDestroy");
+        super.onDestroy();
+    }
+
+    // Вопрос: при таком интенте В списке возможных приложений выдается много лишних(копировать, еще какие-то)
     // можно ли как-то это ограничить ? т.е я, например, хочу чтоб выбор был только среди смс приложения, и почты, и ватсап. но остальные вообще не рассматривались даже
     // возможно ли это?
     View.OnClickListener onClickListener = new View.OnClickListener() {

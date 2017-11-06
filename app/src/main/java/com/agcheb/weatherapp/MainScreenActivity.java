@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -16,6 +17,7 @@ import android.widget.TextView;
  */
 
 public class MainScreenActivity extends Activity {
+    private static final String TAG = "########mainscreen";
     public static final String APP_PREFERENCES = "mysettings";
     public static final String CALLBACKMSG = "callbackmsg";
 
@@ -41,9 +43,43 @@ public class MainScreenActivity extends Activity {
 
     @Override
     protected void onPause() {
+        Log.d(TAG,"onPause");
         super.onPause();
         savePreferences(APP_PREFERENCES,spinnerCities.getSelectedItemPosition());
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //outState.putString("weather_effect");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d(TAG,"onStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(TAG,"onResume");
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onStop() {
+        Log.d(TAG,"onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG,"onDestroy");
+        super.onDestroy();
+    }
+
+
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
