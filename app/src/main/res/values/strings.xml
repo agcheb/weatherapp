@@ -6,6 +6,10 @@
     <string name="textview">Choose the city</string>
     <string name="showdescript">Find out the weather</string>
     <string name="share_btn">Share</string>
+    <string name="city_wasn_t_choosen">City wasn\'t choosen</string>
+    <string name="pressure">pressure</string>
+    <string name="tommorow_weather">tommorow weather</string>
+    <string name="weekly_average">weekly average</string>
 
 
     <string-array name="cities">
@@ -33,4 +37,46 @@
 
 
     </string-array>
+
+
+    <string-array name="pressure">
+
+        <item>high pressure Moscow</item>
+        <item>high pressure Peter</item>
+        <item>high pressure Krasnodar</item>
+        <item>high pressure Eburg</item>
+        <item>high pressure Novosib</item>
+        <item>high pressure Khabarovsk</item>
+        <item>Vladivostok 2000!</item>
+
+
+    </string-array>
+
+    <string-array name="w_tommorow">
+
+        <item>tommorow sunny</item>
+        <item>tommorow rainy</item>
+        <item>tommorow sunny +30</item>
+        <item>tommorow sunny +10</item>
+        <item>tommorow snow</item>
+        <item>tommorow cold</item>
+        <item>tommorow Vladivostok 2000!</item>
+
+
+    </string-array>
+
+    <string-array name="we_weekly">
+
+        <item>average +10</item>
+        <item>average rainy</item>
+        <item>average +30</item>
+        <item>average +10</item>
+        <item>average snow</item>
+        <item>average -10</item>
+        <item>average Vladivostok 2000!</item>
+
+
+    </string-array>
+
+
 </resources>

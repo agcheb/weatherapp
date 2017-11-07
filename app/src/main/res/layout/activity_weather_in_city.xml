@@ -11,7 +11,7 @@
         android:id="@+id/textview_city"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="City wasn't choosen"/>
+        android:text="@string/city_wasn_t_choosen"/>
 
     <TextView
 
@@ -19,7 +19,7 @@
         android:id="@+id/textview_weather"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="City wasn't choosen"/>
+        android:text="@string/city_wasn_t_choosen"/>
 
     <Button
 

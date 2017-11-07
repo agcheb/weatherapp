@@ -21,6 +21,28 @@
         android:layout_marginTop="@dimen/standartmargintop"
         android:entries="@array/cities"/>
 
+    <CheckBox
+        android:id="@+id/checkboxpressure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pressure"
+        android:textSize="25sp"/>
+
+
+    <CheckBox
+        android:id="@+id/checkboxtommorow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/tommorow_weather"
+        android:textSize="25sp"/>
+
+    <CheckBox
+        android:id="@+id/checkboxweekly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/weekly_average"
+        android:textSize="25sp" />
+
     <Button
 
         android:id="@+id/button_show_weather"
@@ -31,6 +53,7 @@
         android:layout_marginTop="@dimen/standartmargintop"
         android:text="@string/showdescript"
         />
+
     <TextView
 
         android:layout_marginTop="@dimen/standartmargintop"
