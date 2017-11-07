@@ -11,4 +11,16 @@ public class WeatherInCity {
         String[] weather = context.getResources().getStringArray(R.array.weather);
         return weather[position];
     }
+    static String getPressure(Context context, int position){
+        String[] weather = context.getResources().getStringArray(R.array.pressure);
+        return weather[position];
+    }
+    static String getTommorowWeather(Context context, int position){
+        String[] weather = context.getResources().getStringArray(R.array.w_tommorow);
+        return weather[position];
+    }
+    static String getWeeklyWeather(Context context, int position){
+        String[] weather = context.getResources().getStringArray(R.array.we_weekly);
+        return weather[position];
+    }
 }

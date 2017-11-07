@@ -21,8 +21,7 @@
 
         <activity
             android:name=".MainScreenActivity"
-            android:label="@string/app_name"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.tutorial.CLEARSCREEN" />
 
@@ -30,8 +29,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".WeatherInCityActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
+        <activity android:name=".WeatherInCityActivity"></activity>
     </application>
 
 </manifest>

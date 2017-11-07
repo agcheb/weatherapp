@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,8 +23,14 @@ public class MainScreenActivity extends Activity {
     public static final String CALLBACKMSG = "callbackmsg";
 
     private static final int REQCODE = 1;
+    private static final String APP_PREFERENCES1 = "checkbox1";
+    private static final String APP_PREFERENCES2 = "checkbox2";
+    private static final String APP_PREFERENCES3 = "checkbox3";
 
     Spinner spinnerCities;
+    CheckBox checkBoxPressure;
+    CheckBox checkBoxTommorow;
+    CheckBox checkBoxWeekly;
     TextView resultTextFromNextScreen;
 
     @Override
@@ -33,19 +40,34 @@ public class MainScreenActivity extends Activity {
         SharedPreferences sp = getSharedPreferences(APP_PREFERENCES,
                 Context.MODE_PRIVATE);
 
-        Button btnChooseWeather = (Button)findViewById(R.id.button_show_weather);
-        spinnerCities = (Spinner)findViewById(R.id.spinner_for_cities);
-        resultTextFromNextScreen = (TextView)findViewById(R.id.text_view_smth);
+        Button btnChooseWeather = (Button) findViewById(R.id.button_show_weather);
+        Log.d(TAG, "onCreate");
+
+        checkBoxPressure = (CheckBox) findViewById(R.id.checkboxpressure);
+        checkBoxTommorow = (CheckBox) findViewById(R.id.checkboxtommorow);
+        checkBoxWeekly = (CheckBox) findViewById(R.id.checkboxweekly);
+
+        spinnerCities = (Spinner) findViewById(R.id.spinner_for_cities);
+        resultTextFromNextScreen = (TextView) findViewById(R.id.text_view_smth);
+        Log.d(TAG, "loadpreferences");
 
         loadPreferences();
         btnChooseWeather.setOnClickListener(onClickListener);
+        checkBoxPressure.setOnClickListener(onClickListener);
+        checkBoxTommorow.setOnClickListener(onClickListener);
+        checkBoxWeekly.setOnClickListener(onClickListener);
+        Log.d(TAG, "vsebtns");
+
     }
 
     @Override
     protected void onPause() {
-        Log.d(TAG,"onPause");
+        Log.d(TAG, "onPause");
         super.onPause();
-        savePreferences(APP_PREFERENCES,spinnerCities.getSelectedItemPosition());
+        savePreferences(APP_PREFERENCES, spinnerCities.getSelectedItemPosition()
+                , checkBoxPressure.isChecked()
+                , checkBoxTommorow.isChecked()
+                , checkBoxWeekly.isChecked());
     }
 
     @Override
@@ -56,26 +78,26 @@ public class MainScreenActivity extends Activity {
 
     @Override
     protected void onStart() {
-        Log.d(TAG,"onStart");
+        Log.d(TAG, "onStart");
         super.onStart();
     }
 
     @Override
     protected void onResume() {
-        Log.d(TAG,"onResume");
+        Log.d(TAG, "onResume");
         super.onResume();
     }
 
 
     @Override
     protected void onStop() {
-        Log.d(TAG,"onStop");
+        Log.d(TAG, "onStop");
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d(TAG,"onDestroy");
+        Log.d(TAG, "onDestroy");
         super.onDestroy();
     }
 
@@ -90,7 +112,10 @@ public class MainScreenActivity extends Activity {
                 String result = WeatherInCity.getWeather(MainScreenActivity.this,cityNum);
                 Intent intent = new Intent(MainScreenActivity.this,WeatherInCityActivity.class);
                 intent.putExtra(WeatherInCityActivity.EXTRA_CITY,city);
-                intent.putExtra(WeatherInCityActivity.EXTRA_MESSAGE,result);
+                intent.putExtra(WeatherInCityActivity.EXTRA_MESSAGE,cityNum);
+                intent.putExtra(WeatherInCityActivity.CHECKBOX_PRESSURE,checkBoxPressure.isChecked());
+                intent.putExtra(WeatherInCityActivity.CHECKBOX_TOMMOROW,checkBoxTommorow.isChecked());
+                intent.putExtra(WeatherInCityActivity.CHECKBOX_WEEKLY,checkBoxWeekly.isChecked());
 
                 startActivityForResult(intent, REQCODE);
             }
@@ -105,11 +130,14 @@ public class MainScreenActivity extends Activity {
         }
     }
 
-    private void savePreferences(String key, int value) {
+    private void savePreferences(String key, int value, boolean checkbox1, boolean checkbox2, boolean checkbox3) {
         SharedPreferences sharedPreferences = getSharedPreferences(
                 APP_PREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(key, value);
+        editor.putBoolean(APP_PREFERENCES1, checkbox1);
+        editor.putBoolean(APP_PREFERENCES2, checkbox2);
+        editor.putBoolean(APP_PREFERENCES3, checkbox3);
         editor.apply();
     }
 
@@ -118,7 +146,15 @@ public class MainScreenActivity extends Activity {
                 APP_PREFERENCES, MODE_PRIVATE);
         int savedRadioIndex = sharedPreferences.getInt(
                 APP_PREFERENCES, 0);
+
+        boolean checkbox1 = sharedPreferences.getBoolean(APP_PREFERENCES1,false);
+        boolean checkbox2 = sharedPreferences.getBoolean(APP_PREFERENCES2,false);
+        boolean checkbox3 = sharedPreferences.getBoolean(APP_PREFERENCES3,false);
+
         spinnerCities.setSelection(savedRadioIndex);
+        checkBoxPressure.setChecked(checkbox1);
+        checkBoxTommorow.setChecked(checkbox2);
+        checkBoxWeekly.setChecked(checkbox3);
 
 
     }

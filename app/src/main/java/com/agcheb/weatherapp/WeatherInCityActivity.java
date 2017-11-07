@@ -12,6 +12,10 @@ public class WeatherInCityActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "weatherincity";
     public static final String EXTRA_CITY = "city";
+    public static final String CHECKBOX_PRESSURE = "checkbox1";
+    public static final String CHECKBOX_TOMMOROW = "checkbox2";
+    public static final String CHECKBOX_WEEKLY = "checkbox3";
+
     private static final String TAG = "########weather";
     private static final String CITY = "city";
     private static final String WEATHER_EFFECT = "weather_effect";
@@ -19,11 +23,16 @@ public class WeatherInCityActivity extends AppCompatActivity {
 
     TextView cityview;
     TextView weatherincity;
+    TextView pressure;
+    TextView tommorowWeather;
+    TextView weeklyWeather;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String city;
         String weather;
+        int citynum;
+
         if(savedInstanceState != null){
             city = savedInstanceState.getString(CITY);
             weather = savedInstanceState.getString(WEATHER_EFFECT);
@@ -39,11 +48,31 @@ public class WeatherInCityActivity extends AppCompatActivity {
 
         if(intent != null){
             city = intent.getStringExtra(EXTRA_CITY);
-            weather = intent.getStringExtra(EXTRA_MESSAGE);
+            citynum = intent.getIntExtra(EXTRA_MESSAGE,0);
+            boolean checkboxPressure = intent.getBooleanExtra(CHECKBOX_PRESSURE,false);
+            boolean checkboxTommorow = intent.getBooleanExtra(CHECKBOX_TOMMOROW,false);
+            boolean checkboxWeekly = intent.getBooleanExtra(CHECKBOX_WEEKLY,false);
             cityview = (TextView) findViewById(R.id.textview_city);
             weatherincity = (TextView) findViewById(R.id.textview_weather);
+            pressure = (TextView) findViewById(R.id.text_pressure);
+            tommorowWeather = (TextView) findViewById(R.id.text_tommorow_weather);
+            weeklyWeather = (TextView) findViewById(R.id.text_weekly_weather);
+
 
             cityview.setText(city);
+            weather = WeatherInCity.getWeather(WeatherInCityActivity.this,citynum);
+            if(checkboxPressure){
+                pressure.setText(WeatherInCity.getPressure(WeatherInCityActivity.this,citynum));
+                pressure.setVisibility(View.VISIBLE);
+            }
+            if(checkboxTommorow){
+                tommorowWeather.setText(WeatherInCity.getTommorowWeather(WeatherInCityActivity.this,citynum));
+                tommorowWeather.setVisibility(View.VISIBLE);
+            }
+            if(checkboxWeekly){
+                weeklyWeather.setText(WeatherInCity.getWeeklyWeather(WeatherInCityActivity.this,citynum));
+                weeklyWeather.setVisibility(View.VISIBLE);
+            }
             weatherincity.setText(weather);
 
         }
