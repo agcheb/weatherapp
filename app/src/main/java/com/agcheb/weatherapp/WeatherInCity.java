@@ -7,6 +7,10 @@ import android.content.Context;
  */
 
 public class WeatherInCity {
+    static String[] getCity(Context context){
+        String[] city = context.getResources().getStringArray(R.array.cities);
+        return city;
+    }
     static String getWeather(Context context, int position){
         String[] weather = context.getResources().getStringArray(R.array.weather);
         return weather[position];
