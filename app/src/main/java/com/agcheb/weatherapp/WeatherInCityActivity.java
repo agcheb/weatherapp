@@ -26,6 +26,7 @@ public class WeatherInCityActivity extends AppCompatActivity {
     TextView pressure;
     TextView tommorowWeather;
     TextView weeklyWeather;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,18 +34,25 @@ public class WeatherInCityActivity extends AppCompatActivity {
         String weather;
         int citynum;
 
+
+
+        setContentView(R.layout.activity_weather_in_city);
+        Intent intent = getIntent();
+
+        cityview = (TextView) findViewById(R.id.textview_city);
+        weatherincity = (TextView) findViewById(R.id.textview_weather);
+        pressure = (TextView) findViewById(R.id.text_pressure);
+        tommorowWeather = (TextView) findViewById(R.id.text_tommorow_weather);
+        weeklyWeather = (TextView) findViewById(R.id.text_weekly_weather);
+
         if(savedInstanceState != null){
             city = savedInstanceState.getString(CITY);
             weather = savedInstanceState.getString(WEATHER_EFFECT);
 
-            cityview = (TextView) findViewById(R.id.textview_city);
-            weatherincity = (TextView) findViewById(R.id.textview_weather);
 
             cityview.setText(city);
             weatherincity.setText(weather);
         }
-        setContentView(R.layout.activity_weather_in_city);
-        Intent intent = getIntent();
 
         if(intent != null){
             city = intent.getStringExtra(EXTRA_CITY);
@@ -52,11 +60,6 @@ public class WeatherInCityActivity extends AppCompatActivity {
             boolean checkboxPressure = intent.getBooleanExtra(CHECKBOX_PRESSURE,false);
             boolean checkboxTommorow = intent.getBooleanExtra(CHECKBOX_TOMMOROW,false);
             boolean checkboxWeekly = intent.getBooleanExtra(CHECKBOX_WEEKLY,false);
-            cityview = (TextView) findViewById(R.id.textview_city);
-            weatherincity = (TextView) findViewById(R.id.textview_weather);
-            pressure = (TextView) findViewById(R.id.text_pressure);
-            tommorowWeather = (TextView) findViewById(R.id.text_tommorow_weather);
-            weeklyWeather = (TextView) findViewById(R.id.text_weekly_weather);
 
 
             cityview.setText(city);
@@ -83,6 +86,8 @@ public class WeatherInCityActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+
+        Log.d(TAG,"saveSTate");
         outState.putString(CITY,cityview.getText().toString());
         outState.putString(WEATHER_EFFECT,weatherincity.getText().toString());
         super.onSaveInstanceState(outState);
