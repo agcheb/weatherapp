@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
                         sleep(100);
                         logoTimer = logoTimer +100;
                     };
-                    Intent intent = new Intent(SplashActivity.this, MainScreenActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }

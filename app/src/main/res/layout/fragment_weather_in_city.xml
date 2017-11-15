@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -39,6 +39,12 @@
         android:layout_height="wrap_content"
         android:visibility="gone"/>
 
+    <ImageView
+        android:id="@+id/image_weather"
+        android:layout_width="@dimen/std_width_image"
+        android:layout_height="@dimen/std_image_height"
+        android:contentDescription="@string/no_photo"
+        tools:src="@drawable/rain"/>
 
     <Button
 
@@ -51,4 +57,4 @@
         android:layout_marginTop="@dimen/standartmargintop"
         android:text="@string/share_btn"
         />
-    </LinearLayout>
+</LinearLayout>

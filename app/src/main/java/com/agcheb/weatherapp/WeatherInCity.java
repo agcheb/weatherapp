@@ -7,6 +7,28 @@ import android.content.Context;
  */
 
 public class WeatherInCity {
+
+    private int resorceId;
+
+    private WeatherInCity(int resorceId) {
+        this.resorceId = resorceId;
+    }
+
+    static final WeatherInCity[] weatherInCities = {
+            new WeatherInCity(R.drawable.sun),
+            new WeatherInCity(R.drawable.rain),
+            new WeatherInCity(R.drawable.sun),
+            new WeatherInCity(R.drawable.sun),
+            new WeatherInCity(R.drawable.snow),
+            new WeatherInCity(R.drawable.snow),
+            new WeatherInCity(R.drawable.snow)
+    };
+
+    public int getResorceId() {
+        return resorceId;
+    }
+
+
     static String[] getCity(Context context){
         String[] city = context.getResources().getStringArray(R.array.cities);
         return city;
