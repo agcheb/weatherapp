@@ -33,7 +33,7 @@ public class DetailActivity extends AppCompatActivity {
         weatherInCityFragment.setCheckboxTommorow(chbox2);
         weatherInCityFragment.setCheckboxWeekly(chbox3);
 
-        transaction.add(R.id.details_fragment,weatherInCityFragment);
+        transaction.replace(R.id.details_fragment,weatherInCityFragment);
         transaction.commit();
 
     }

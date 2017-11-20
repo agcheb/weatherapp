@@ -4,6 +4,8 @@ package com.agcheb.weatherapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class WeatherInCityFragment extends Fragment {
 
+    private static final String DETAILS_FRAGMENT_TAG​ = "asasdasddasd234sdf";
 
     private int cityId;
     private String city = "";
@@ -28,18 +31,18 @@ public class WeatherInCityFragment extends Fragment {
     private boolean checkboxWeekly;
 
 
+    private TextView cityview;
+    private TextView weatherincity;
 
-
-
-    TextView cityview;
-    TextView weatherincity;
-    TextView pressure;
-    TextView tommorowWeather;
-    TextView weeklyWeather;
     public WeatherInCityFragment() {
         // Required empty public constructor
     }
 
+//    public static WeatherInCityFragment init(Bundle bundle){
+//        WeatherInCityFragment fragment = new WeatherInCityFragment();
+//        fragment.setArguments(bundle);
+//        return fragment;
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,29 +54,32 @@ public class WeatherInCityFragment extends Fragment {
         String weather;
         cityview = (TextView) view.findViewById(R.id.textview_city);
         weatherincity = (TextView) view.findViewById(R.id.textview_weather);
-        pressure = (TextView) view.findViewById(R.id.text_pressure);
-        tommorowWeather = (TextView) view.findViewById(R.id.text_tommorow_weather);
-        weeklyWeather = (TextView) view.findViewById(R.id.text_weekly_weather);
         cityview.setText(WeatherInCity.getCity(getActivity())[cityId]);
         weather = WeatherInCity.getWeather(getActivity(),cityId);
 
         WeatherInCity weatherInCity = WeatherInCity.weatherInCities[cityId];
-        if(checkboxPressure){
-            pressure.setText(WeatherInCity.getPressure(getActivity(),cityId));
-            pressure.setVisibility(View.VISIBLE);
-        }
-        if(checkboxTommorow){
-            tommorowWeather.setText(WeatherInCity.getTommorowWeather(getActivity(),cityId));
-            tommorowWeather.setVisibility(View.VISIBLE);
-        }
-        if(checkboxWeekly){
-            weeklyWeather.setText(WeatherInCity.getWeeklyWeather(getActivity(),cityId));
-            weeklyWeather.setVisibility(View.VISIBLE);
-        }
         weatherincity.setText(weather);
 
         ImageView imageResourceId = (ImageView)view.findViewById(R.id.image_weather);
         imageResourceId.setImageResource(weatherInCity.getResorceId());
+
+        //Создаем Вложенный Фрагмент
+        Bundle bundle = new Bundle();
+        bundle.putInt(DetailedInfoFragment.EXTRA_CITY_INDEX,cityId);
+        bundle.putBoolean(DetailedInfoFragment.EXTRA_CH_BOX1,checkboxPressure);
+        bundle.putBoolean(DetailedInfoFragment.EXTRA_CH_BOX2,checkboxTommorow);
+        bundle.putBoolean(DetailedInfoFragment.EXTRA_CH_BOX3,checkboxWeekly);
+
+        FragmentManager fragmentManager = getChildFragmentManager();
+        DetailedInfoFragment detailedInfoFragment = (DetailedInfoFragment)fragmentManager.findFragmentByTag(DETAILS_FRAGMENT_TAG​);
+        if(detailedInfoFragment == null){
+            FragmentTransaction fragmentTransaction =
+                    fragmentManager.beginTransaction();
+            detailedInfoFragment = DetailedInfoFragment.init(bundle);
+            fragmentTransaction.replace(R.id.details_info_container,detailedInfoFragment,DETAILS_FRAGMENT_TAG​);
+            fragmentTransaction.commit();
+        }
+
         Button btnShareWithFriends = (Button)view.findViewById(R.id.button_share);
         btnShareWithFriends.setOnClickListener(onClickListener);
 
@@ -95,7 +101,6 @@ public class WeatherInCityFragment extends Fragment {
                 intentShare.setType("text/plain");
                 intentShare.putExtra(Intent.EXTRA_TEXT,msgForSharing);
 
-                //соершит попытку отправки сообщения только если есть приложения подходящие по фильтру
                 if(intentShare.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivity(intentShare);
                 }
@@ -106,10 +111,6 @@ public class WeatherInCityFragment extends Fragment {
 
     public void setCityId(int cityId) {
         this.cityId = cityId;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public void setCheckboxPressure(boolean checkboxPressure) {

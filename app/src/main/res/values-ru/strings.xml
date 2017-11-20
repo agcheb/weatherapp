@@ -11,6 +11,7 @@
     <string name="tommorow_weather">погода на завтра</string>
     <string name="weekly_average">средняя за неделю погода</string>
     <string name="no_photo">нет картинки</string>
+    <string name="details">Дополнительная информация</string>
 
 
     <string-array name="cities">

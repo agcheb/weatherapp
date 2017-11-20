@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements MainMenuFragment.
             weatherInCityFragment.setCheckboxTommorow(chbox2);
             weatherInCityFragment.setCheckboxWeekly(chbox3);
 
-            transaction.addToBackStack(null);
             transaction.replace(R.id.fragment_container, weatherInCityFragment);
 
             transaction.commit();
