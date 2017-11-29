@@ -82,6 +82,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_photo">no photo</string>
     <string name="details">Details</string>
+    <string name="menu_add">menu_add</string>
+    <string name="menu_clear">menu_clear</string>
+    <string name="menu_edit">edit</string>
+    <string name="menu_delete">delete</string>
 
 
 </resources>
