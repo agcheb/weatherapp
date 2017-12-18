@@ -33,6 +33,8 @@ public class WeatherInCityFragment extends Fragment {
     private static final String LOG_TAG = "!!!+++!!!";
     private final Handler handler = new Handler();
 
+    WeatherDataSource weatherDataSource;
+
     private static final String DETAILS_FRAGMENT_TAG​ = "asasdasddasd234sdf";
 
     private int cityId;
@@ -79,18 +81,26 @@ public class WeatherInCityFragment extends Fragment {
 
     private void renderWeather(JSONObject json){
         try{
-            cityview.setText(json.getString("name").toUpperCase(Locale.US) + ", " + json.getJSONObject("sys").getString("country"));
 
-            //JSONObject details = json.getJSONArray("weather").getJSONObject(0);
+            String cityjson = json.getString("name").toUpperCase(Locale.US);
+            cityview.setText(cityjson + ", " + json.getJSONObject("sys").getString("country"));
+
+//            JSONObject details = json.getJSONArray("weather").getJSONObject(0);
             JSONObject main = json.getJSONObject("main");
+            String pressurejson = main.getString("pressure");
+            String humidityjson = main.getString("humidity");
 //            detailsview.setText(details.getString("description").toUpperCase(Locale.US) + "\n" + "Humidity: " + main.getString("humidity") + "%" "\n" +
 //                    "Pressure: " + main.getString("pressure") + "hPa");
-            weatherincity.setText(String.format(Locale.US, "%.2f", main.getDouble("temp")) + " by Celcium");
+            double tempjson = main.getDouble("temp");
+            weatherincity.setText(String.format(Locale.US, "%.2f", tempjson) + " by Celcium");
 
             Log.d(LOG_TAG,"должна поменяться температура");
             DateFormat df = DateFormat.getDateInstance();
-            String updatedOn = df.format(new Date(json.getLong("dt") * 1000));
+            long dtjson = json.getLong("dt");
+            String updatedOn = df.format(new Date(dtjson * 1000));
             updatedTextView.setText("Last update: " + updatedOn);
+
+            weatherDataSource.addNote(cityjson,tempjson,dtjson,pressurejson,humidityjson);
         }
         catch (Exception e){
             Log.d(LOG_TAG,"One or more fields not found in the JSON data");
@@ -102,7 +112,7 @@ public class WeatherInCityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-       View view = inflater.inflate(R.layout.fragment_weather_in_city, container, false);
+        View view = inflater.inflate(R.layout.fragment_weather_in_city, container, false);
 
         String weather;
         cityview = (TextView) view.findViewById(R.id.textview_city);
@@ -110,6 +120,8 @@ public class WeatherInCityFragment extends Fragment {
         updatedTextView = (TextView) view.findViewById(R.id.updated_field);
         cityview.setText(WeatherInCity.getCity(getActivity())[cityId]);
         weather = WeatherInCity.getWeather(getActivity(),cityId);
+        weatherDataSource = new WeatherDataSource(getActivity().getApplicationContext());
+        weatherDataSource.open();
 
         WeatherInCity weatherInCity = WeatherInCity.weatherInCities[cityId];
         //weatherincity.setText(weather);
