@@ -3,15 +3,24 @@ package com.agcheb.weatherapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -20,6 +29,9 @@ import static android.app.Activity.RESULT_OK;
  * A simple {@link Fragment} subclass.
  */
 public class WeatherInCityFragment extends Fragment {
+
+    private static final String LOG_TAG = "!!!+++!!!";
+    private final Handler handler = new Handler();
 
     private static final String DETAILS_FRAGMENT_TAG​ = "asasdasddasd234sdf";
 
@@ -32,17 +44,58 @@ public class WeatherInCityFragment extends Fragment {
 
 
     private TextView cityview;
+    private TextView updatedTextView;
     private TextView weatherincity;
 
     public WeatherInCityFragment() {
         // Required empty public constructor
     }
 
-//    public static WeatherInCityFragment init(Bundle bundle){
-//        WeatherInCityFragment fragment = new WeatherInCityFragment();
-//        fragment.setArguments(bundle);
-//        return fragment;
-//    }
+
+    private void updateWeatherData(final String city){
+        new Thread(){
+            public void run(){
+                final JSONObject json = WeatherDataLoader.getJSONData(getActivity().getApplicationContext(),city);
+
+                if(json == null){
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity().getApplicationContext(),getString(R.string.place_not_found),Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            renderWeather(json);
+                        }
+                    });
+                }
+            }
+        }.start();
+    }
+
+    private void renderWeather(JSONObject json){
+        try{
+            cityview.setText(json.getString("name").toUpperCase(Locale.US) + ", " + json.getJSONObject("sys").getString("country"));
+
+            //JSONObject details = json.getJSONArray("weather").getJSONObject(0);
+            JSONObject main = json.getJSONObject("main");
+//            detailsview.setText(details.getString("description").toUpperCase(Locale.US) + "\n" + "Humidity: " + main.getString("humidity") + "%" "\n" +
+//                    "Pressure: " + main.getString("pressure") + "hPa");
+            weatherincity.setText(String.format(Locale.US, "%.2f", main.getDouble("temp")) + " by Celcium");
+
+            Log.d(LOG_TAG,"должна поменяться температура");
+            DateFormat df = DateFormat.getDateInstance();
+            String updatedOn = df.format(new Date(json.getLong("dt") * 1000));
+            updatedTextView.setText("Last update: " + updatedOn);
+        }
+        catch (Exception e){
+            Log.d(LOG_TAG,"One or more fields not found in the JSON data");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,11 +107,13 @@ public class WeatherInCityFragment extends Fragment {
         String weather;
         cityview = (TextView) view.findViewById(R.id.textview_city);
         weatherincity = (TextView) view.findViewById(R.id.textview_weather);
+        updatedTextView = (TextView) view.findViewById(R.id.updated_field);
         cityview.setText(WeatherInCity.getCity(getActivity())[cityId]);
         weather = WeatherInCity.getWeather(getActivity(),cityId);
 
         WeatherInCity weatherInCity = WeatherInCity.weatherInCities[cityId];
-        weatherincity.setText(weather);
+        //weatherincity.setText(weather);
+        updateWeatherData(WeatherInCity.getCity(getActivity())[cityId]);
 
         ImageView imageResourceId = (ImageView)view.findViewById(R.id.image_weather);
         imageResourceId.setImageResource(weatherInCity.getResorceId());

@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Weatherapp</string>
     <string name="splashtext">Welcome to weather app</string>
-
+<string name="open_weather_app_key">4b19e843ef52349fbe62c653736081e6</string>
+    <string name="place_not_found">There is no such city</string>
 
     <string name="textview">Choose the city</string>
     <string name="showdescript">Find out the weather</string>
