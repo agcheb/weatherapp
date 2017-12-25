@@ -24,7 +24,6 @@ public class MainMenuFragment extends Fragment {
 
     CheckBox checkBoxPressure;
     CheckBox checkBoxTommorow;
-    CheckBox checkBoxWeekly;
 
 
     public MainMenuFragment() {
@@ -32,7 +31,7 @@ public class MainMenuFragment extends Fragment {
     }
 
     interface CitiesListListener{
-        void onListItemClick(int id,boolean chbox1,boolean chbox2,boolean chbox3);
+        void onListItemClick(int id,boolean chbox1,boolean chbox2);
     }
 
     @Override
@@ -55,7 +54,6 @@ public class MainMenuFragment extends Fragment {
 
         checkBoxPressure = (CheckBox) rootView.findViewById(R.id.checkboxpressure);
         checkBoxTommorow = (CheckBox) rootView.findViewById(R.id.checkboxtommorow);
-        checkBoxWeekly = (CheckBox) rootView.findViewById(R.id.checkboxweekly);
 
 
         return rootView;
@@ -100,6 +98,6 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void showWeather(int cityIndex){
-        mainActivity.onListItemClick(cityIndex,checkBoxPressure.isChecked(),checkBoxTommorow.isChecked(),checkBoxWeekly.isChecked());
+        mainActivity.onListItemClick(cityIndex,checkBoxPressure.isChecked(),checkBoxTommorow.isChecked());
     }
 }

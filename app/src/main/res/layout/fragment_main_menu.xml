@@ -16,15 +16,9 @@
         android:id="@+id/checkboxtommorow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/tommorow_weather"
+        android:hint="humidity"
         android:textSize="25sp"/>
 
-    <CheckBox
-        android:id="@+id/checkboxweekly"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/weekly_average"
-        android:textSize="25sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

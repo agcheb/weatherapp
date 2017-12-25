@@ -22,8 +22,6 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static android.app.Activity.RESULT_OK;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,13 +39,14 @@ public class WeatherInCityFragment extends Fragment {
     private String city = "";
 
     private boolean checkboxPressure;
-    private boolean checkboxTommorow;
-    private boolean checkboxWeekly;
+    private boolean checkboxHumidity;
 
 
     private TextView cityview;
     private TextView updatedTextView;
     private TextView weatherincity;
+    private TextView pressureview;
+    private TextView humidityView;
 
     public WeatherInCityFragment() {
         // Required empty public constructor
@@ -85,12 +84,17 @@ public class WeatherInCityFragment extends Fragment {
             String cityjson = json.getString("name").toUpperCase(Locale.US);
             cityview.setText(cityjson + ", " + json.getJSONObject("sys").getString("country"));
 
-//            JSONObject details = json.getJSONArray("weather").getJSONObject(0);
             JSONObject main = json.getJSONObject("main");
             String pressurejson = main.getString("pressure");
             String humidityjson = main.getString("humidity");
-//            detailsview.setText(details.getString("description").toUpperCase(Locale.US) + "\n" + "Humidity: " + main.getString("humidity") + "%" "\n" +
-//                    "Pressure: " + main.getString("pressure") + "hPa");
+            if (checkboxPressure){
+                pressureview.setText("Pressure: " + main.getString("pressure") + "hPa");
+                pressureview.setVisibility(View.VISIBLE);
+            }
+            if (checkboxHumidity){
+                humidityView.setText("Humidity: " + main.getString("humidity") + "%");
+                humidityView.setVisibility(View.VISIBLE);
+            }
             double tempjson = main.getDouble("temp");
             weatherincity.setText(String.format(Locale.US, "%.2f", tempjson) + " by Celcium");
 
@@ -114,38 +118,19 @@ public class WeatherInCityFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_weather_in_city, container, false);
 
-        String weather;
         cityview = (TextView) view.findViewById(R.id.textview_city);
         weatherincity = (TextView) view.findViewById(R.id.textview_weather);
         updatedTextView = (TextView) view.findViewById(R.id.updated_field);
         cityview.setText(WeatherInCity.getCity(getActivity())[cityId]);
-        weather = WeatherInCity.getWeather(getActivity(),cityId);
+        pressureview = (TextView) view.findViewById(R.id.text_pressure);
+        humidityView = (TextView) view.findViewById(R.id.text_tommorow_weather);
+
+
         weatherDataSource = new WeatherDataSource(getActivity().getApplicationContext());
         weatherDataSource.open();
 
-        WeatherInCity weatherInCity = WeatherInCity.weatherInCities[cityId];
-        //weatherincity.setText(weather);
         updateWeatherData(WeatherInCity.getCity(getActivity())[cityId]);
 
-        ImageView imageResourceId = (ImageView)view.findViewById(R.id.image_weather);
-        imageResourceId.setImageResource(weatherInCity.getResorceId());
-
-        //Создаем Вложенный Фрагмент
-        Bundle bundle = new Bundle();
-        bundle.putInt(DetailedInfoFragment.EXTRA_CITY_INDEX,cityId);
-        bundle.putBoolean(DetailedInfoFragment.EXTRA_CH_BOX1,checkboxPressure);
-        bundle.putBoolean(DetailedInfoFragment.EXTRA_CH_BOX2,checkboxTommorow);
-        bundle.putBoolean(DetailedInfoFragment.EXTRA_CH_BOX3,checkboxWeekly);
-
-        FragmentManager fragmentManager = getChildFragmentManager();
-        DetailedInfoFragment detailedInfoFragment = (DetailedInfoFragment)fragmentManager.findFragmentByTag(DETAILS_FRAGMENT_TAG​);
-        if(detailedInfoFragment == null){
-            FragmentTransaction fragmentTransaction =
-                    fragmentManager.beginTransaction();
-            detailedInfoFragment = DetailedInfoFragment.init(bundle);
-            fragmentTransaction.replace(R.id.details_info_container,detailedInfoFragment,DETAILS_FRAGMENT_TAG​);
-            fragmentTransaction.commit();
-        }
 
         Button btnShareWithFriends = (Button)view.findViewById(R.id.button_share);
         btnShareWithFriends.setOnClickListener(onClickListener);
@@ -184,11 +169,8 @@ public class WeatherInCityFragment extends Fragment {
         this.checkboxPressure = checkboxPressure;
     }
 
-    public void setCheckboxTommorow(boolean checkboxTommorow) {
-        this.checkboxTommorow = checkboxTommorow;
+    public void setCheckboxHumidity(boolean checkboxHumidity) {
+        this.checkboxHumidity = checkboxHumidity;
     }
 
-    public void setCheckboxWeekly(boolean checkboxWeekly) {
-        this.checkboxWeekly = checkboxWeekly;
     }
-}

@@ -30,13 +30,23 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/city_wasn_t_choosen"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/details" />
 
-    <ImageView
-        android:id="@+id/image_weather"
-        android:layout_width="@dimen/std_width_image"
-        android:layout_height="@dimen/std_image_height"
-        android:contentDescription="@string/no_photo"
-        tools:src="@drawable/rain"/>
+    <TextView
+        android:id="@+id/text_pressure"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/text_tommorow_weather"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
 
     <FrameLayout
         android:id="@+id/details_info_container"

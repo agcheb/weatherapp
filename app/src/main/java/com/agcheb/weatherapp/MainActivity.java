@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements MainMenuFragment.
          }
 
     @Override
-    public void onListItemClick(int id, boolean chbox1, boolean chbox2, boolean chbox3) {
+    public void onListItemClick(int id, boolean chbox1, boolean chbox2) {
 
         View fragmentContainer = findViewById(R.id.fragment_container);
 
@@ -27,8 +27,7 @@ public class MainActivity extends AppCompatActivity implements MainMenuFragment.
 
             weatherInCityFragment.setCityId(id);
             weatherInCityFragment.setCheckboxPressure(chbox1);
-            weatherInCityFragment.setCheckboxTommorow(chbox2);
-            weatherInCityFragment.setCheckboxWeekly(chbox3);
+            weatherInCityFragment.setCheckboxHumidity(chbox2);
 
             transaction.replace(R.id.fragment_container, weatherInCityFragment);
 
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements MainMenuFragment.
             intent.putExtra(DetailActivity.EXTRA_CITY_INDEX,id);
             intent.putExtra(DetailActivity.EXTRA_CH_BOX1,chbox1);
             intent.putExtra(DetailActivity.EXTRA_CH_BOX2,chbox2);
-            intent.putExtra(DetailActivity.EXTRA_CH_BOX3,chbox3);
             startActivity(intent);
         }
     }
