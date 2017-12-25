@@ -2,6 +2,7 @@ package com.agcheb.weatherapp;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,10 @@ public class MainMenuFragment extends Fragment {
     private final static int VERTICAL = 1;
 
     private CitiesListListener mainActivity;
+
+    SharedPreferences sPrefs;
+    final  String SAVED_CHBOX1 = "chbox1";
+    final  String SAVED_CHBOX2 = "chbox2";
 
     CheckBox checkBoxPressure;
     CheckBox checkBoxTommorow;
@@ -58,6 +63,19 @@ public class MainMenuFragment extends Fragment {
 
         return rootView;
     }
+
+    @Override
+    public void onPause() {
+        savePrefs();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        loadPrefs();
+        super.onResume();
+    }
+
     private class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView cityNameitem;
@@ -99,5 +117,20 @@ public class MainMenuFragment extends Fragment {
 
     private void showWeather(int cityIndex){
         mainActivity.onListItemClick(cityIndex,checkBoxPressure.isChecked(),checkBoxTommorow.isChecked());
+    }
+
+    private void savePrefs(){
+        sPrefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPrefs.edit();
+        ed.putBoolean(SAVED_CHBOX1,checkBoxPressure.isChecked());
+        ed.putBoolean(SAVED_CHBOX2,checkBoxTommorow.isChecked());
+        ed.commit();
+    }
+    private void loadPrefs(){
+        sPrefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+        boolean chbox1 = sPrefs.getBoolean(SAVED_CHBOX1,false);
+        boolean chbox2 = sPrefs.getBoolean(SAVED_CHBOX2,false);
+        checkBoxPressure.setChecked(chbox1);
+        checkBoxTommorow.setChecked(chbox2);
     }
 }
