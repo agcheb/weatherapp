@@ -4,6 +4,7 @@ package com.agcheb.weatherapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -132,7 +133,7 @@ public class WeatherInCityFragment extends Fragment {
         updateWeatherData(WeatherInCity.getCity(getActivity())[cityId]);
 
 
-        Button btnShareWithFriends = (Button)view.findViewById(R.id.button_share);
+        FloatingActionButton btnShareWithFriends = (FloatingActionButton) view.findViewById(R.id.button_share);
         btnShareWithFriends.setOnClickListener(onClickListener);
 
 
