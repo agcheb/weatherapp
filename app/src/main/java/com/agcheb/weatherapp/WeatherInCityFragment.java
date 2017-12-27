@@ -29,6 +29,7 @@ import java.util.Locale;
  */
 public class WeatherInCityFragment extends Fragment {
 
+
     private static final String LOG_TAG = "!!!+++!!!";
     private final Handler handler = new Handler();
 

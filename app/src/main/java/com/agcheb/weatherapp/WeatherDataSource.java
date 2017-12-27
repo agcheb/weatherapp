@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by agcheb on 18.12.17.
  */
@@ -64,12 +67,13 @@ public class WeatherDataSource {
         database.delete(DatabaseHelper.TABLE_WEATHER, null, null);
     }
 
-    public WeatherDBObject getAllNotes(String city) {
+    public WeatherDBObject getAllNotes() {
 
         Cursor cursor = database.query(DatabaseHelper.TABLE_WEATHER,
-                weatherAllColumn, DatabaseHelper.COLUMN_CITY + "=" + city, null, null, null, null);
+                weatherAllColumn, null, null, null, null, null);
 
-        cursor.moveToFirst();
+        cursor.moveToLast();
+
             WeatherDBObject note = cursorToNote(cursor);
             // make sure to close the cursor
         cursor.close();

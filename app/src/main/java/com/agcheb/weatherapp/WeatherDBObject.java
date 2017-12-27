@@ -59,4 +59,9 @@ public class WeatherDBObject {
     public void setHumidity(String humidity) {
         this.humidity = humidity;
     }
+
+    @Override
+    public String toString() {
+        return city;
+    }
 }
